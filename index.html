@@ -122,6 +122,17 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; }
 .wellness-item span { color: var(--cinnabar); font: 12px var(--serif); letter-spacing: .18em; }
 .wellness-item h3 { margin: 10px 0 8px; font-size: 20px; }
 .wellness-item p { margin: 0; color: var(--ink-soft); font: 15px/1.75 var(--kai); }
+.tea-reminder { padding: clamp(32px,5vw,52px) clamp(24px,5vw,58px); display: grid; grid-template-columns: auto minmax(0,1fr) minmax(300px,.72fr); align-items: center; gap: clamp(24px,4vw,48px); border-bottom: 1px solid var(--line); position: relative; overflow: hidden; background: linear-gradient(110deg,rgba(120,148,143,.08),transparent 58%); }
+.tea-reminder::after { content: "茶"; position: absolute; right: 5%; top: -72px; color: rgba(101,120,106,.055); font: 230px var(--serif); pointer-events: none; }
+.tea-seal { width: 58px; height: 82px; border: 1px solid var(--cinnabar); color: var(--cinnabar); display: grid; place-items: center; text-align: center; font: 20px/1.35 var(--serif); transform: rotate(-2deg); }
+.tea-copy, .tea-measures { position: relative; z-index: 1; }
+.tea-copy h2 { margin: 0; font: 500 clamp(27px,3.5vw,38px)/1.35 var(--serif); letter-spacing: .07em; }
+.tea-copy > p:last-child { margin: 12px 0 0; color: var(--ink-soft); font: 15px/1.8 var(--kai); }
+.tea-measures { display: grid; grid-template-columns: repeat(2,1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.tea-measures div { min-height: 82px; padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: grid; align-content: center; gap: 5px; }
+.tea-measures span { color: var(--ink-soft); font-size: 10px; letter-spacing: .16em; }
+.tea-measures strong { font: 500 18px var(--serif); }
+.tea-tip { grid-column: 1/-1; margin: 0; padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--leaf-dark); font: 14px/1.75 var(--kai); }
 .daily-lesson { padding: clamp(32px,5vw,56px) clamp(24px,7vw,80px); display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 36px; position: relative; overflow: hidden; }
 .daily-lesson::after { content: "日课"; position: absolute; right: 10%; top: -28px; color: rgba(101,120,106,.07); font: 150px var(--serif); pointer-events: none; }
 .daily-lesson > div, .daily-lesson button { position: relative; z-index: 2; }
@@ -243,6 +254,10 @@ dialog textarea { width: 100%; min-height: 130px; resize: vertical; padding: 14p
   .wellness-item { min-height: 0; display: grid; grid-template-columns: 46px 80px 1fr; align-items: baseline; padding-top: 14px; }
   .wellness-item h3, .wellness-item p { margin: 0; }
   .wellness-item p { font-size: 14px; }
+  .tea-reminder { grid-template-columns: auto 1fr; align-items: start; gap: 18px; padding: 34px 20px 38px; }
+  .tea-seal { width: 48px; height: 68px; font-size: 17px; }
+  .tea-measures { grid-column: 1/-1; width: 100%; }
+  .tea-tip { font-size: 13px; }
   .daily-lesson { grid-template-columns: 1fr; gap: 22px; padding: 34px 20px 45px; }
   .daily-lesson .primary-button { width: 100%; }
   .stamp { right: 24px; top: 24px; width: 54px; height: 54px; }
@@ -287,7 +302,7 @@ dialog textarea { width: 100%; min-height: 130px; resize: vertical; padding: 14p
 
 </style>
   <!-- 单文件离线版：CSS、数据与脚本均已内嵌 -->
-  <title>栖云日课｜每日黄历 · 节气养生 · 宋韵手账</title>
+  <title>栖云日课｜每日黄历 · 节气养生 · 东方茶道 · 宋韵手账</title>
 </head>
 <body>
   <a class="skip" href="#main">跳到主要内容</a>
@@ -297,7 +312,7 @@ dialog textarea { width: 100%; min-height: 130px; resize: vertical; padding: 14p
         <span class="seal-logo" aria-hidden="true">栖云</span>
         <span class="brand-copy"><strong>栖云日课</strong><small>SONG ALBUM JOURNAL</small></span>
       </button>
-      <p>观物候 · 养身心 · 记日常</p>
+      <p>观物候 · 品茶汤 · 养身心 · 记日常</p>
     </header>
 
     <main id="main">
@@ -349,8 +364,18 @@ dialog textarea { width: 100%; min-height: 130px; resize: vertical; padding: 14p
           <article class="wellness-card"><div class="section-head"><h2>四时养生</h2><small>顺时而养 · 轻量可做</small></div><div class="wellness-list" id="home-wellness"></div></article>
         </section>
 
+        <section class="tea-reminder" aria-labelledby="tea-title">
+          <div class="tea-seal" aria-hidden="true">茶<br>道</div>
+          <div class="tea-copy"><p class="kicker">今日茶道</p><h2 id="tea-title">凤凰单枞 · 白瓷小壶</h2><p id="tea-reminder-copy"></p></div>
+          <div class="tea-measures" aria-label="凤凰单枞冲泡参数">
+            <div><span>壶量</span><strong>100 ml</strong></div><div><span>投茶</span><strong>5 g</strong></div>
+            <div><span>水温</span><strong>95 ℃</strong></div><div><span>前三泡</span><strong>即注即出</strong></div>
+            <p class="tea-tip">若壶嘴出水偏慢，减至 4 克；每泡彻底沥净，泡间开盖散热。</p>
+          </div>
+        </section>
+
         <section class="daily-lesson"><div><p class="kicker">今日一课</p><h2 id="daily-action"></h2><p id="daily-quote"></p></div><button class="primary-button" id="checkin" type="button">完成今日一课</button><span class="stamp" id="stamp">今<br>日</span></section>
-        <p class="disclaimer">黄历与养生内容用于日常文化体验和自我照料参考，不替代医疗建议或重大决策依据。</p>
+        <p class="disclaimer">黄历、养生与茶道内容用于日常文化体验和自我照料参考，不替代医疗建议或重大决策依据。</p>
       </section>
 
       <section class="view" id="view-almanac" data-screen-label="黄历">
@@ -455,6 +480,15 @@ const XUANLI_DATA = {
     "草木有本心，何求美人折。",
     "行到水穷处，坐看云起时。",
     "松风吹解带，山月照弹琴。"
+  ],
+  teaReminders: [
+    "先减茶，不先降温。高温能醒香，投茶与浸泡时间才是苦味的主要开关。",
+    "前三泡注水后立即出汤，白瓷壶倒水所用的时间，本身已经在浸泡。",
+    "每一泡都要彻底沥净，壶底留下的一口茶汤，会让下一泡明显变苦。",
+    "两泡之间把壶盖打开，让叶底散热，也让花香保持清朗。",
+    "碎叶浸出更快；若茶底碎叶较多，投茶量再减约一克。",
+    "先闻盖香，再小口品饮；茶汤稍降温后，花果香和回甘更容易分辨。",
+    "若五克仍苦，先试四克、即注即出，再判断是否需要调整水温。"
   ]
 };
 
@@ -601,7 +635,8 @@ const XUANLI_DATA = {
       yi: pickMany(DATA.yi, seed, 3),
       ji: pickMany(DATA.ji, seed ^ 9157, 3),
       wellness: pickMany(DATA.wellness, seed ^ 2089, 3),
-      quote: pick(DATA.quotes, seed, 5)
+      quote: pick(DATA.quotes, seed, 5),
+      teaReminder: pick(DATA.teaReminders, seed, 9)
     };
   }
 
@@ -622,6 +657,7 @@ const XUANLI_DATA = {
     qs("#home-yi").innerHTML = content.yi.join("<br>");
     qs("#home-ji").innerHTML = content.ji.join("<br>");
     qs("#home-wellness").innerHTML = content.wellness.map((item) => `<div class="wellness-item"><span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p></div>`).join("");
+    qs("#tea-reminder-copy").textContent = content.teaReminder;
     qs("#daily-action").textContent = content.theme.action;
     qs("#daily-quote").textContent = content.quote;
     renderCheckin();
